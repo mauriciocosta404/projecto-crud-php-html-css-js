@@ -1,0 +1,25 @@
+body{
+
+    background-color:  #0dcaf0;
+}
+.wrapper{
+    margin: 80px;
+}
+form{
+    display: flex;
+    flex-direction: column;
+}
+.form-signin{
+    max-width: 380px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 15px 40px 50px ;
+    border: 1px solid #e5e5e5;
+}
+.form-signin  .form-signin-heading, .form-signin .checkbox{
+
+    margin-bottom: 30px;
+}
+input[type='email'],input[type='text']{
+    margin-bottom: 20px;
+}
