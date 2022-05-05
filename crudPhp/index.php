@@ -12,7 +12,7 @@
             <div class="card-header">
                 <h2>all data</h2>
             </div>
-            <div class="card-body">
+            <div class="card-body"> 
                 <table class="table table-bordered">
                     <tr>
                         <th>Id</th>
@@ -25,13 +25,14 @@
                         <td><?=$people->id?></td>
                         <td><?=$people->nome?></td>
                         <td><?=$people->email?></td>
-                        <td>
-                            <a href="edit.php?id=<?=$people->id?>"  class="btn btn-info">Edit</a>   
-                            <a onclick="return confirm('are you sure you want to delete this people')"  href="delete.php?id=<?=$people->id?>" class="btn btn-danger">Delete</a>
-                        </td>
+                            <td>
+                                <a href="edit.php?id=<?=$people->id?>"  class="btn btn-info">Edit</a>   
+                                <a onclick="return confirm('are you sure you want to delete this people')"  href="delete.php?id=<?=$people->id?>" class="btn btn-danger">Delete</a>
+                            </td>
                     </tr>
                     <?php endforeach;?>
                 </table>
+                
             </div>
         </div>
    </div>
