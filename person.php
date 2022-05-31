@@ -41,7 +41,7 @@
         $sql='INSERT INTO users(nome,email) VALUES(:nome,:email)';
         $statement=$connection->prepare($sql);
         $statement->bindValue(":nome",$this->getNome(),\PDO::PARAM_STR);
-        $statement->bindValue(":email",$this->getEmail(),\PDO::PARAM_INT);
+        $statement->bindValue(":email",$this->getEmail(),\PDO::PARAM_STR);
         if($statement->execute()){
             $this->setId($connection->lastInsertId());
             return $this->read();
@@ -53,20 +53,50 @@
         $connection=$this->connection();
         
 
-    if($this->getId()===0){
-        $sql='SELECT * FROM users';
-        $statement=$connection->prepare($sql);
-        if($statement->execute()){
-            $data=$statement->fetchAll(PDO::FETCH_ASSOC);
+        if($this->getId()===0){
+            $sql='SELECT * FROM users';
+            $statement=$connection->prepare($sql);
+            if($statement->execute()){
+                $data=$statement->fetchAll(PDO::FETCH_ASSOC);
+            }
+        }elseif ($this->getId()>0) {
+            $sql='SELECT * FROM users WHERE id= :id';
+            $statement=$connection->prepare($sql);
+            $statement->bindValue("id",$this->id);
+            if($statement->execute()){
+                $data=$statement->fetchAll(PDO::FETCH_ASSOC);
+            }
+            return [];
         }
-    }elseif ($this->getId()>0) {
-        $sql='SELECT * FROM users WHERE id= :id';
-        $statement=$connection->prepare($sql);
-        $statement->bindValue("id",$this->id);
-        if($statement->execute()){
-            $data=$statement->fetchAll(PDO::FETCH_ASSOC);
-        }
-       return [];
     }
+
+    public function update():array
+    {
+        $connection=$this->connection();
+        $sql='UPDATE users SET nome=:nome,email=:email WHERE id=:id';
+        $statement=$connection->prepare($sql);
+        $statement->bindValue(":id",$this->getId(),\PDO::PARAM_INT);
+        $statement->bindValue(":nome",$this->getNome(),\PDO::PARAM_STR);
+        $statement->bindValue(":email",$this->getEmail(),\PDO::PARAM_STR);
+        if($statement->execute()){
+            return $this->read();
+        }
+        return [];
+    }
+
+    public function delete():array
+    {
+        $person=$this->read();
+        $connection=$this->connection();
+        $sql='DELETE FROM users WHERE id=:id';
+        $statement=$connection->prepare($sql);
+        $statement->bindValue(":id",$this->getId(),\PDO::PARAM_INT);
+        if($statement->execute()){
+            return $person;
+        }
+        return [];
+    }
+
+
 }
 ?>
